@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, viewsets
 
-from .models import Client
-from .serializers import ClientSerializer
+from .models import Client, User
+from .serializers import ClientSerializer, UserSerializer
 
 def ok_view(request):
     return HttpResponse("ok!")
@@ -13,11 +13,7 @@ def list_clients(request):
     clients_list = list(clients)
     return JsonResponse(clients_list, safe=False)
 
-def mock_login(request):
-    return JsonResponse({'loggedIn':True, 'username': 'mock_user'})
 
-def mock_signup(request):
-    return JsonResponse({'loggedIn':True, 'username': 'mock_user'})
 
 class ClientList(generics.ListCreateAPIView):
     serializer_class = ClientSerializer
@@ -26,7 +22,16 @@ class ClientList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def post(self, request, *args, **kwargs):
-        request.data['user_string'] = request.user.username
+
+        # print(request.user.pk)
+        # print(request.user.id)
+        # output = User.objects.get(id=request.user.id)
+        # print(output)
+
+        user_url = f'http://127.0.0.1:8000/api/users/{request.user.id}/'
+
+        request.data['user'] = user_url        
+
         return super().post(request, *args, **kwargs)
 
 class ClientDetail(generics.RetrieveUpdateDestroyAPIView):
@@ -39,3 +44,7 @@ class ClientListProtected(generics.ListCreateAPIView):
     queryset = Client.objects.all()
 
     permission_classes = [permissions.IsAuthenticated]
+
+class UserViewSet(viewsets.ModelViewSet):
+    serializer_class = UserSerializer
+    queryset = User.objects.all()

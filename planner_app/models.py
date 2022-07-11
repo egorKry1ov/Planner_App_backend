@@ -1,4 +1,5 @@
 from django.db import models
+import uuid
 from django.contrib.auth.models import (
     AbstractBaseUser, BaseUserManager
 )
@@ -55,8 +56,9 @@ class User(AbstractBaseUser):
         return True
 
 class Client(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='clients')
+    uuid = models.UUIDField(unique=True, auto_created=True, default=uuid.uuid4)
     name = models.CharField(max_length=150)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='clients', default=3)
 
     def __str__(self):
        return self.name
