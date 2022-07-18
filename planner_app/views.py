@@ -10,7 +10,7 @@ class ClientList(generics.ListCreateAPIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 
     def get_queryset(self):
-     return Client.objects.all().filter(user_id=self.request.user)
+     return Client.objects.all()
 
     def post(self, request, *args, **kwargs):
         user_url = f'http://127.0.0.1:8000/api/users/{request.user.id}/'
