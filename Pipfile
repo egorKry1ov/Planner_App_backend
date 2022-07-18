@@ -12,6 +12,7 @@ django-rest-framework = "*"
 django-extensions = "*"
 django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
+django-heroku = "*"
 
 [dev-packages]
 
