@@ -13,6 +13,7 @@ django-extensions = "*"
 django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 django-heroku = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
