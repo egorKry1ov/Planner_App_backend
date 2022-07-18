@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, Client
+from .models import User, Client, Event
 
 
 
@@ -14,6 +14,8 @@ class UserAdmin(UserAdmin):
     fieldsets = ()
 
 admin.site.register(Client)
+
+admin.site.register(Event)
 
 admin.site.register(User, UserAdmin)
 # Register your models here.

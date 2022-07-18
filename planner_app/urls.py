@@ -7,14 +7,10 @@ router = DefaultRouter()
 router.register('users', UserViewSet)
 
 urlpatterns = [
-    
-    path('ok/', views.ok_view),
-    path('list_clients', views.list_clients),
-
-    # path('mock_login', views.mock_login),
+ 
     path('api/', include(router.urls)),
-    # path('mock_signup', views.mock_signup),
-
+    path('events/', views.EventList.as_view()),
+    path('events/<int:pk>', views.EventDetail.as_view()),
     path('clients/', views.ClientList.as_view()),
     path('clients/<int:pk>', views.ClientDetail.as_view()),
 

@@ -57,9 +57,20 @@ class User(AbstractBaseUser):
 
 class Client(models.Model):
     uuid = models.UUIDField(unique=True, auto_created=True, default=uuid.uuid4)
-    name = models.CharField(max_length=150)
+    title = models.CharField(max_length=150)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='clients', default=3)
 
     def __str__(self):
-       return self.name
+       return self.title
+
+class Event(models.Model):
+    title = models.CharField(max_length=150)
+    description = models.CharField(max_length=300, blank=True )
+    start = models.CharField(max_length=300 )
+    end = models.CharField(max_length=300  )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='events',)
+
+    def __str__(self):
+       return self.title
+
 
