@@ -13,7 +13,7 @@ class ClientList(generics.ListCreateAPIView):
      return Client.objects.all().filter(user_id=self.request.user)
 
     def post(self, request, *args, **kwargs):
-        user_url = f'https://appoitment-planner-api.herokuapp.com/api/users/{request.user.id}/'
+        user_url = f'http://127.0.0.1:8000/api/users/{request.user.id}/'
         request.data['user'] = user_url        
         return super().post(request, *args, **kwargs)
 
@@ -25,7 +25,7 @@ class EventList(generics.ListCreateAPIView):
      return Event.objects.all().filter(user_id=self.request.user)
 
     def post(self, request, *args, **kwargs):
-        user_url = f'https://appoitment-planner-api.herokuapp.com/api/users/{request.user.id}/'
+        user_url = f'http://127.0.0.1:8000/api/users/{request.user.id}/'
         request.data['user'] = user_url        
         return super().post(request, *args, **kwargs)
 
