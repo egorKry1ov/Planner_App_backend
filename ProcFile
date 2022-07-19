@@ -1,2 +1,2 @@
 web: gunicorn planner_app.wsgi
-
+heroku ps:scale web=1
