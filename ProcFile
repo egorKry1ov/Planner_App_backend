@@ -1,1 +1,1 @@
-web: python3 planner_app
+web: gunicorn planner_project.wsgi

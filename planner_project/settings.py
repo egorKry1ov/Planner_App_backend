@@ -11,16 +11,12 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
-import dotenv 
-import django_heroku
+import dj_database_url
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-dotenv_file = os.path.join(BASE_DIR, ".env")
-if os.path.isfile(dotenv_file):
-    dotenv.load_dotenv(dotenv_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -29,9 +25,9 @@ if os.path.isfile(dotenv_file):
 SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True if os.environ['MODE'] == 'dev' else False
 
-ALLOWED_HOSTS = ['https://appoitment-planner-api.herokuapp.com', 'localhost', 'http://127.0.0.1:8000/']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -53,10 +49,11 @@ AUTH_USER_MODEL = 'planner_app.User'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -89,12 +86,16 @@ WSGI_APPLICATION = 'planner_project.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'planner_auth',
-        'USER': 'planner_user',
-        'PASSWORD': 'password'
-    }
+    # 'default': 
+        'default': dj_database_url.config(conn_max_age=600)
+
+    # {
+
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'planner_auth',
+    #     'USER': 'planner_user',
+    #     'PASSWORD': 'password'
+    # }
 }
 
 
@@ -150,7 +151,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # STATIC_ROOT = "app-root/repo/wsgi/static"
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -160,4 +161,4 @@ USE_L10N = False
 
 DATE_INPUT_FORMATS = ['%Y/%m/%d']  
 
-django_heroku.settings(locals())
+STATIC_ROOT=os.path.join(BASE_DIR, "static/")

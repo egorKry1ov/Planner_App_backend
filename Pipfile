@@ -12,9 +12,10 @@ django-rest-framework = "*"
 django-extensions = "*"
 django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
-django-heroku = "*"
 python-dotenv = "*"
 gunicorn = "*"
+whitenoise = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
