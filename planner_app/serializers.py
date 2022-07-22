@@ -18,7 +18,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     events = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
         model = User
-        fields = ('email', 'username', 'password', 'clients', 'id', 'events' )
+        fields = ('email', 'username', 'password', 'clients', 'id', 'events', 'date_joined', 'last_login' )
 
         extra_kwargs = {'password': {
             'write_only':True,
